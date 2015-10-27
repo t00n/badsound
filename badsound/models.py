@@ -12,7 +12,9 @@ class Music(models.Model):
 class Comparison(models.Model):
     music1 = models.ForeignKey(Music, related_name="comparison1")
     music2 = models.ForeignKey(Music, related_name="comparison2")
+    created_at = models.DateField(auto_now_add=True)
 
 class Vote(models.Model):
     comparison = models.ForeignKey(Comparison)
     vote = models.ForeignKey(Music)
+    created_at = models.DateField(auto_now_add=True)

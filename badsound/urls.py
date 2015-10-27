@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from .views import add_music
+from .views import add_music, add_vote
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/add_music', add_music, name='add_music'),
+    url(r'^/?', add_vote, name='add_vote')
 ]

@@ -1,0 +1,14 @@
+<p>
+    <form method="post" action="{{form1.action}}">
+        {% csrf_token %}
+        {{ form1.comparison.as_hidden }}
+        {{ form1.vote.as_hidden }}
+        <input type="submit" />
+    </form>
+    <form method="post" action="{{form2.action}}">
+        {% csrf_token %}
+        {{ form1.comparison.as_hidden }}
+        {{ form2.vote.as_hidden }}
+        <input type="submit" />
+    </form>
+</p>
