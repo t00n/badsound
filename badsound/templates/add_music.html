@@ -1,0 +1,7 @@
+<p> Enter a URL
+    <form method="post" action="{{form.action}}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" />
+    </form>
+</p>

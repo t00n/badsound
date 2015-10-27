@@ -1,7 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Music(models.Model):
+    user = models.ForeignKey(User)
     url = models.URLField(verbose_name="URL")
+    created_at = models.DateField(auto_now_add=True)
+
+    class Meta:
+        unique_together = (("user", "created_at"),)
 
 class Comparison(models.Model):
     music1 = models.ForeignKey(Music, related_name="comparison1")
