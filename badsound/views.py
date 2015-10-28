@@ -24,9 +24,9 @@ def add_vote(request):
         music1, music2 = Music.objects.order_by('?')[:2]
         form1 = AddVoteForm(instance=Vote(music1=music1, music2=music2, winner=music1))
         form2 = AddVoteForm(instance=Vote(music1=music1, music2=music2, winner=music2))
-        return render(request, 'add_vote.html', { 'form1': form1, 
-                                                  'form2': form2,
-                                                  'music1': music1,
-                                                  'music2': music2})
+        form1.video_url = music1.url
+        form2.video_url = music2.url
+
+        return render(request, 'add_vote.html', {'forms': [form1, form2]})
     except ValueError:
         return render(request, 'add_vote.html', { 'error': 'Pas assez de musiques. Rajoutez en !'})

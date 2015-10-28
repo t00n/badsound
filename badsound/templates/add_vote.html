@@ -10,46 +10,28 @@
 {% else %}
     <div class="container-fluid">
         <div class="row">
+            {% for form in forms %}
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
-                        {% video music1.url as my_video %}
+                        {% video form.video_url as my_video %}
                           {% video my_video "medium" %}
                         {% endvideo %}
                     </div>
                 </div>
                 <div class="row">
-                    <form method="post" action="{{form1.action}}">
+                    <form method="post" action="{{form.action}}">
                         {% csrf_token %}
-                        {{ form1.music1.as_hidden }}
-                        {{ form1.music2.as_hidden }}
-                        {{ form1.winner.as_hidden }}
+                        {{ form.music1.as_hidden }}
+                        {{ form.music2.as_hidden }}
+                        {{ form.winner.as_hidden }}
                         <div class="col-md-2"></div>
                         <input value="Voter pour cette musique" class="col-md-8 btn btn-success btn-lg" type="submit" />
                         <div class="col-md-2"></div>
                     </form>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-12">
-                        {% video music2.url as my_video %}
-                          {% video my_video "medium" %}
-                        {% endvideo %}
-                    </div>
-                </div>
-                <div class="row">
-                    <form method="post" action="{{form2.action}}">
-                        {% csrf_token %}
-                        {{ form2.music1.as_hidden }}
-                        {{ form2.music2.as_hidden }}
-                        {{ form2.winner.as_hidden }}
-                        <div class="col-md-2"></div>
-                        <input value="Voter pour cette musique" class="col-md-8 btn btn-success btn-lg" type="submit" />
-                        <div class="col-md-2"></div>
-                    </form>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 {% endif %}
