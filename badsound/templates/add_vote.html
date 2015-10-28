@@ -8,34 +8,52 @@
         {{error}}
     </div>
 {% else %}
-    <div class="row">
-        <div class="col-md-6">
-            {% video music1.url as my_video %}
-              {% video my_video "medium" %}
-            {% endvideo %}
-        </div>
-        <div class="col-md-6">
-            {% video music2.url as my_video %}
-              {% video my_video "medium" %}
-            {% endvideo %}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <form method="post" action="{{form1.action}}">
-                {% csrf_token %}
-                {{ form1.comparison.as_hidden }}
-                {{ form1.vote.as_hidden }}
-                <input class="btn" type="submit" />
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form method="post" action="{{form2.action}}">
-                {% csrf_token %}
-                {{ form1.comparison.as_hidden }}
-                {{ form2.vote.as_hidden }}
-                <input class="btn" type="submit" />
-            </form>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% video music1.url as my_video %}
+                          {% video my_video "medium" %}
+                        {% endvideo %}
+                    </div>
+                </div>
+                <div class="row">
+                    <form method="post" action="{{form1.action}}">
+                        {% csrf_token %}
+                        {{ form1.music1.as_hidden }}
+                        {{ form1.music2.as_hidden }}
+                        {{ form1.winner.as_hidden }}
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4"> 
+                            <input value="Voter pour cette musique" class="btn btn-success" type="submit" />
+                        </div>
+                        <div class="col-md-4"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% video music2.url as my_video %}
+                          {% video my_video "medium" %}
+                        {% endvideo %}
+                    </div>
+                </div>
+                <div class="row">
+                    <form method="post" action="{{form2.action}}">
+                        {% csrf_token %}
+                        {{ form2.music1.as_hidden }}
+                        {{ form2.music2.as_hidden }}
+                        {{ form2.winner.as_hidden }}
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4"> 
+                            <input value="Voter pour cette musique" class="btn btn-success" type="submit" />
+                        </div>
+                        <div class="col-md-4"></div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 {% endif %}
