@@ -1,14 +1,37 @@
-<p>
-    <form method="post" action="{{form1.action}}">
-        {% csrf_token %}
-        {{ form1.comparison.as_hidden }}
-        {{ form1.vote.as_hidden }}
-        <input type="submit" />
-    </form>
-    <form method="post" action="{{form2.action}}">
-        {% csrf_token %}
-        {{ form1.comparison.as_hidden }}
-        {{ form2.vote.as_hidden }}
-        <input type="submit" />
-    </form>
-</p>
+{% extends "base.html" %}
+{% block content %}
+
+{% load bootstrap3 %}
+{% load embed_video_tags %}
+
+<div class="row">
+    <div class="col-md-6">
+        {% video music1.url as my_video %}
+          {% video my_video "medium" %}
+        {% endvideo %}
+    </div>
+    <div class="col-md-6">
+        {% video music2.url as my_video %}
+          {% video my_video "medium" %}
+        {% endvideo %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" action="{{form1.action}}">
+            {% csrf_token %}
+            {{ form1.comparison.as_hidden }}
+            {{ form1.vote.as_hidden }}
+            <input type="submit" />
+        </form>
+    </div>
+    <div class="col-md-6">
+        <form method="post" action="{{form2.action}}">
+            {% csrf_token %}
+            {{ form1.comparison.as_hidden }}
+            {{ form2.vote.as_hidden }}
+            <input type="submit" />
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -38,8 +38,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'badsound',
     'bootstrap3',
+    'embed_video',
+
+    'badsound',
 )
 
 MIDDLEWARE_CLASSES = (

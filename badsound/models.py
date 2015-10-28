@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from embed_video.fields import EmbedVideoField
 
 class Music(models.Model):
     user = models.ForeignKey(User)
-    url = models.URLField(verbose_name="URL")
+    url = EmbedVideoField(verbose_name="URL")
     created_at = models.DateField(auto_now_add=True)
 
     class Meta:

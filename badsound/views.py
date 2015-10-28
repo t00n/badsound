@@ -26,13 +26,14 @@ def add_music(request):
 
 def add_vote(request):
     if request.method == "GET":
-        form1 = AddVoteForm()
-        form2 = AddVoteForm()
         try:
             comparison = Comparison.objects.order_by('-pk')[0]
             form1 = AddVoteForm(instance=Vote(comparison=comparison, vote=comparison.music1))
             form2 = AddVoteForm(instance=Vote(comparison=comparison, vote=comparison.music2))
-            return render(request, 'add_vote.html', {'form1': form1, 'form2': form2})
+            return render(request, 'add_vote.html', { 'form1': form1, 
+                                                      'music1' : comparison.music1, 
+                                                      'form2': form2,
+                                                      'music2' : comparison.music2})
         except IndexError:
             raise Http404
     elif request.method == "POST":
