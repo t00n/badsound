@@ -21,8 +21,7 @@ def add_vote(request):
         if form.is_valid():
             vote = form.save()
     try:
-        music1 = Music.objects.order_by('?').first()
-        music2 = Music.objects.order_by('?').first()
+        music1, music2 = Music.objects.order_by('?')[:2]
         form1 = AddVoteForm(instance=Vote(music1=music1, music2=music2, winner=music1))
         form2 = AddVoteForm(instance=Vote(music1=music1, music2=music2, winner=music2))
         return render(request, 'add_vote.html', { 'form1': form1, 
