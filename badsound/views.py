@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from .forms import AddMusicForm, AddVoteForm
-from .models import Comparison, Music, Vote
+from .models import Music, Vote
 from datetime import date
 
 def add_music(request):
@@ -12,31 +12,22 @@ def add_music(request):
         form = AddMusicForm(request.POST)
         if form.is_valid():
             music = form.save(commit=False)
-            music.user = request.user
             music.save()
-            musics = Music.objects.filter(created_at=date.today())
-            if len(musics) == 2:
-                comparison = Comparison()
-                comparison.music1 = musics[0]
-                comparison.music2 = musics[1]
-                comparison.save()
-    form.action = reverse('add_music')
-    form.method = "POST"
     return render(request, 'add_music.html', {'form': form})
 
 def add_vote(request):
-    if request.method == "GET":
-        try:
-            comparison = Comparison.objects.order_by('-pk')[0]
-            form1 = AddVoteForm(instance=Vote(comparison=comparison, vote=comparison.music1))
-            form2 = AddVoteForm(instance=Vote(comparison=comparison, vote=comparison.music2))
-            return render(request, 'add_vote.html', { 'form1': form1, 
-                                                      'music1' : comparison.music1, 
-                                                      'form2': form2,
-                                                      'music2' : comparison.music2})
-        except IndexError:
-            raise Http404
-    elif request.method == "POST":
+    if request.method == "POST":
         form = AddVoteForm(request.POST)
         if form.is_valid():
             vote = form.save()
+    try:
+        music1 = Music.objects.order_by('?').first()
+        music2 = Music.objects.order_by('?').first()
+        form1 = AddVoteForm(instance=Vote(music1=music1, music2=music2, winner=music1))
+        form2 = AddVoteForm(instance=Vote(music1=music1, music2=music2, winner=music2))
+        return render(request, 'add_vote.html', { 'form1': form1, 
+                                                  'form2': form2,
+                                                  'music1': music1,
+                                                  'music2': music2})
+    except ValueError:
+        return render(request, 'add_vote.html', { 'error': 'Pas assez de musiques. Rajoutez en !'})

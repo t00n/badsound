@@ -9,4 +9,4 @@ class AddMusicForm(ModelForm):
 class AddVoteForm(ModelForm):
     class Meta:
         model = Vote
-        fields = ['comparison', 'vote']
+        fields = ['music1', 'music2', 'winner']
