@@ -11,6 +11,18 @@
         <title>{% block title %}BadSound{% endblock %}</title>
     </head>
     <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        {% for link in menu %}
+                            <li class="active"><a href="{{link.url}}">{{link.message}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        <nav>
         {% block content %}
         {% endblock %}
     </body>
