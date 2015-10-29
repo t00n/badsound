@@ -1,4 +1,4 @@
-from django.forms import ModelForm, URLField
+from django.forms import ModelForm, URLField, DateField, Form
 from .models import Music, Vote
 
 class AddMusicForm(ModelForm):
@@ -10,3 +10,7 @@ class AddVoteForm(ModelForm):
     class Meta:
         model = Vote
         fields = ['music1', 'music2', 'winner']
+
+class ShowRankingForm(Form):
+    start_date = DateField(required=False)
+    end_date = DateField(required=False)
