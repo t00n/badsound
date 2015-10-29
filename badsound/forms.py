@@ -25,5 +25,5 @@ class ShowRankingForm(Form):
         if start_date and end_date:
             if end_date < start_date:
                 raise forms.ValidationError(
-                    "La date de fin ne peut etre avant la date de début"
+                    "La date de fin ne peut etre avant la date de debut"
                 )
