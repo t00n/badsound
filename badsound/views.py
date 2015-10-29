@@ -6,6 +6,8 @@ from .models import Music, Vote
 from datetime import date
 from collections import defaultdict
 import operator
+import requests
+from bs4 import BeautifulSoup
 
 def get_menu():
     return [{'url': reverse('add_vote'), 'message': 'Accueil/Vote'}, 
@@ -17,6 +19,9 @@ def add_music(request):
         form = AddMusicForm(request.POST)
         if form.is_valid():
             music = form.save(commit=False)
+            url = form.cleaned_data['url']
+            title = BeautifulSoup(requests.get(url).text, "html.parser").title.string.split(" - ")[0]
+            music.title = title
             music.save()
     form = AddMusicForm()
     return render(request, 'add_music.html', {'form': form, 'menu': get_menu()})
@@ -54,14 +59,16 @@ def show_ranking(request):
                 votes = Vote.objects.filter(created_at__lte=end_date)
             else:
                 votes = Vote.objects.all()
-            ratings = defaultdict(lambda: 1400)
+            ratings = defaultdict(lambda: [1400, ""])
             for v in votes:
-                score1 = expected_score(ratings[v.music1.url], ratings[v.music2.url])
-                score2 = expected_score(ratings[v.music2.url], ratings[v.music1.url])
-                ratings[v.music1.url] += 32 * ((v.music1 == v.winner) - score1)
-                ratings[v.music2.url] += 32 * ((v.music2 == v.winner) - score2)
+                score1 = expected_score(ratings[v.music1.url][0], ratings[v.music2.url][0])
+                score2 = expected_score(ratings[v.music2.url][0], ratings[v.music1.url][0])
+                ratings[v.music1.url][0] += 32 * ((v.music1 == v.winner) - score1)
+                ratings[v.music2.url][0] += 32 * ((v.music2 == v.winner) - score2)
+                ratings[v.music1.url][1] = v.music1.title
+                ratings[v.music2.url][1] = v.music2.title
             ratings = sorted(ratings.items(), key=operator.itemgetter(1), reverse=True)[:10]
             for (k, v) in ratings:
-                results.append(type('Dummy', (object,), { "url": k, "rating": round(v) }))
+                results.append(type('Dummy', (object,), { "url": k, "title": v[1], "rating": round(v[0]) }))
     form = ShowRankingForm()
     return render(request, 'show_ranking.html', {'form': form, 'menu': get_menu(), 'results': results})
