@@ -10,6 +10,8 @@
         {% bootstrap_javascript jquery=1 %}
         <title>{% block title %}BadSound - Vote for the worse song ever !{% endblock %}</title>
         {{ form.media }}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
     </head>
     <body>
         <nav class="navbar">
@@ -21,8 +23,14 @@
                 </ul>
             </div>
         <nav>
+        <div class="container-fluid">
         {% block content %}
         {% endblock %}
+        </div>
     </body>
-    <footer><center><b>Made by Toon with the help and ideas of SupayrPoney and iTitou</b></center></footer>
+    <footer class="footer">
+        <div class="container">
+        <center><p class="text-muted">Made by Toon with the help and ideas of SupayrPoney and iTitou</p></center>
+        </div>
+    </footer>
 </html>
