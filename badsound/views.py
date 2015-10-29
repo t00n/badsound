@@ -21,7 +21,7 @@ def add_music(request):
         if form.is_valid():
             music = form.save(commit=False)
             url = form.cleaned_data['url']
-            title = BeautifulSoup(requests.get(url).text, "html.parser").title.string.split(" - ")[0]
+            title = BeautifulSoup(requests.get(url).text, "html.parser").title.string
             music.title = title
             music.save()
     form = AddMusicForm()
@@ -74,5 +74,5 @@ def show_ranking(request):
     return render(request, 'show_ranking.html', {'form': form, 'menu': get_menu(), 'results': results})
 
 def show_music(request):
-    musics = Music.objects.all()
+    musics = Music.objects.order_by('title')
     return render(request, 'show_music.html', {'menu': get_menu(), 'musics': musics})
