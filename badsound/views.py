@@ -46,6 +46,7 @@ def show_ranking(request):
     def expected_score(A, B):
         return 1/(1 + 10**((B-A)/400))
     results = []
+    votes = Vote.objects.all()
     if request.method == "POST":
         form = ShowRankingForm(request.POST)
         if form.is_valid():
@@ -57,18 +58,16 @@ def show_ranking(request):
                 votes = Vote.objects.filter(created_at__gte=start_date)
             elif end_date != None:
                 votes = Vote.objects.filter(created_at__lte=end_date)
-            else:
-                votes = Vote.objects.all()
-            ratings = defaultdict(lambda: [1400, ""])
-            for v in votes:
-                score1 = expected_score(ratings[v.music1.url][0], ratings[v.music2.url][0])
-                score2 = expected_score(ratings[v.music2.url][0], ratings[v.music1.url][0])
-                ratings[v.music1.url][0] += 32 * ((v.music1 == v.winner) - score1)
-                ratings[v.music2.url][0] += 32 * ((v.music2 == v.winner) - score2)
-                ratings[v.music1.url][1] = v.music1.title
-                ratings[v.music2.url][1] = v.music2.title
-            ratings = sorted(ratings.items(), key=operator.itemgetter(1), reverse=True)[:10]
-            for (k, v) in ratings:
-                results.append(type('Dummy', (object,), { "url": k, "title": v[1], "rating": round(v[0]) }))
+    ratings = defaultdict(lambda: [1400, ""])
+    for v in votes:
+        score1 = expected_score(ratings[v.music1.url][0], ratings[v.music2.url][0])
+        score2 = expected_score(ratings[v.music2.url][0], ratings[v.music1.url][0])
+        ratings[v.music1.url][0] += 32 * ((v.music1 == v.winner) - score1)
+        ratings[v.music2.url][0] += 32 * ((v.music2 == v.winner) - score2)
+        ratings[v.music1.url][1] = v.music1.title
+        ratings[v.music2.url][1] = v.music2.title
+    ratings = sorted(ratings.items(), key=operator.itemgetter(1), reverse=True)[:10]
+    for (k, v) in ratings:
+        results.append(type('Dummy', (object,), { "url": k, "title": v[1], "rating": round(v[0]) }))
     form = ShowRankingForm()
     return render(request, 'show_ranking.html', {'form': form, 'menu': get_menu(), 'results': results})
