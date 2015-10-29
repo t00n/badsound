@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4"><strong>Title</strong></div>
+    <div class="col-md-6"></div>
+</div>
+{% for music in musics %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">{{music.title}}</div>
+        <div class="col-md-6"></div>
+    </div>
+{% endfor %}
+{% endblock %}

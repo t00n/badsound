@@ -1,5 +1,6 @@
 ve/
 badsound/__pycache__/
+badsound/migrations/__pycache__/
 db.sqlite3
 venv
 *.pyc
