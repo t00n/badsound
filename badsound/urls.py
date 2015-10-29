@@ -18,7 +18,6 @@ from django.contrib import admin
 from .views import add_music, add_vote
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^add_music', add_music, name='add_music'),
     url(r'^/?', add_vote, name='add_vote')
 ]
