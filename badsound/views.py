@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 def get_menu():
     return [{'url': reverse('add_vote'), 'message': 'Accueil/Vote'}, 
             {'url': reverse('add_music'), 'message': 'Ajouter une musique'},
+            {'url': reverse('show_music'), 'message': 'Liste des musiques'},
             {'url': reverse('show_ranking'), 'message': 'Classement'}]
 
 def add_music(request):
@@ -71,3 +72,7 @@ def show_ranking(request):
         results.append(type('Dummy', (object,), { "url": k, "title": v[1], "rating": round(v[0]) }))
     form = ShowRankingForm()
     return render(request, 'show_ranking.html', {'form': form, 'menu': get_menu(), 'results': results})
+
+def show_music(request):
+    musics = Music.objects.all()
+    return render(request, 'show_music.html', {'menu': get_menu(), 'musics': musics})
