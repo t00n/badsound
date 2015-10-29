@@ -3,13 +3,12 @@
 
 {% block content %}
 <p> 
-    <center>Enter a URL</center>
     <form method="post" class="{{form.action}}">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% buttons %}
-        <input type="submit" />
-        {% endbuttons %}
+        <div class="col-md-5"></div>
+        <input value="Ajouter" class="col-md-2 btn btn-success btn-lg" type="submit" />
+        <div class="col-md-5"></div>
     </form>
 </p>
 {% endblock %}

@@ -2,6 +2,7 @@ dj-database-url==0.3.0
 dj-static==0.0.6
 Django==1.8.5
 django-bootstrap3==6.2.2
+django-bootstrap3-datetimepicker==2.2.3
 django-embed-video==1.0.0
 django-toolbelt==0.0.1
 gunicorn==19.3.0

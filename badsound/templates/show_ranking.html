@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+<div class="container-fluid">
+<form method="post" class="{{form.action}}">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <div class="col-md-5"></div>
+    <input value="Envoyer" class="col-md-2 btn btn-success btn-lg" type="submit" />
+    <div class="col-md-5"></div>
+</form>
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-4">URL</div>
+    <div class="col-md-3">Rating</div>
+    <div class="col-md-2"></div>
+</div>
+{% for result in results %}
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-4"><a href="{{result.url}}">{{result.url}}</a></div>
+        <div class="col-md-3">{{result.rating}}</div>
+        <div class="col-md-2"></div>
+    </div>
+{% endfor %}
+{% endblock %}

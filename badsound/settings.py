@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     
     'bootstrap3',
     'embed_video',
+    'bootstrap3_datetime',
 
     'badsound',
 )
