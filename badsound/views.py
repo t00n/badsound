@@ -10,7 +10,7 @@ import requests
 from bs4 import BeautifulSoup
 
 def get_menu():
-    return [{'url': reverse('add_vote'), 'message': 'Accueil/Vote'}, 
+    return [{'url': reverse('add_vote'), 'message': 'Voter'}, 
             {'url': reverse('add_music'), 'message': 'Ajouter une musique'},
             {'url': reverse('show_music'), 'message': 'Liste des musiques'},
             {'url': reverse('show_ranking'), 'message': 'Classement'}]
